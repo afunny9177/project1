@@ -1,0 +1,47 @@
+HKCR
+{
+	NoRemove CLSID
+	{
+		ForceRemove {8A63CE35-B0E1-4621-9BC1-487FA9398D31} = s 'SimpleContextMenuHandler Class'
+		{
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+		}
+	}
+
+    NoRemove txtfile
+    {
+        NoRemove ShellEx
+        {
+            NoRemove ContextMenuHandlers
+            {
+                ForceRemove SimpleContextMenuHandler = s '{8A63CE35-B0E1-4621-9BC1-487FA9398D31}'
+            }
+        }
+    }
+}
+
+HKLM
+{
+    NoRemove Software
+    {
+        NoRemove Microsoft
+        {
+            NoRemove Windows
+            {
+                NoRemove CurrentVersion
+                {
+                    NoRemove Shell Extensions
+                    {
+                        NoRemove Approved
+                        {
+                            ForceRemove val {8A63CE35-B0E1-4621-9BC1-487FA9398D31} = s 'SimpleContextMenuHandler Extension '
+                        }
+                    }
+                }
+            }
+        }
+    } 
+}

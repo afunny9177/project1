@@ -1,0 +1,32 @@
+// ContextMenuHandlerWithOneItem.idl : ContextMenuHandlerWithOneItem 的 IDL 源
+//
+
+// 此文件将由 MIDL 工具处理以
+// 产生类型库(ContextMenuHandlerWithOneItem.tlb)和封送处理代码。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(A57766BD-9674-4509-9AE5-FD36CEBB5AAA),
+	pointer_default(unique)
+]
+interface ISimpleContextMenuHandler : IUnknown{
+};
+[
+	uuid(20592CFF-1AF1-4E88-9C50-5DC25A7B031E),
+	version(1.0),
+]
+library ContextMenuHandlerWithOneItemLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(8A63CE35-B0E1-4621-9BC1-487FA9398D31)		
+	]
+	coclass SimpleContextMenuHandler
+	{
+		[default] interface ISimpleContextMenuHandler;
+	};
+};
+
