@@ -26,3 +26,15 @@
 *.exe
 *.out
 *.app
+*.aps
+*.user
+*.tlog
+*.res
+*.exp
+*.opensdf
+*.sdf
+*.suo
+*.ilk
+ipch
+Debug
+x64
