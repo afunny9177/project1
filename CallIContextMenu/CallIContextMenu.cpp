@@ -9,56 +9,83 @@
 #include <comdef.h>
 #include <atlconv.h>
 
+int CallIContextMenu()
+{
+    HRESULT hr = E_FAIL;
+
+    IShellFolder *pDesktopFolder = nullptr;
+    hr = SHGetDesktopFolder(&pDesktopFolder);
+    if (FAILED(hr) || !pDesktopFolder)
+    {
+        return 1;
+    }
+
+    ITEMIDLIST *pidlFolder = nullptr;
+    hr = pDesktopFolder->ParseDisplayName(nullptr, nullptr, L"C:\\Program Files (x86)\\KuGou\\KGMusic", nullptr, &pidlFolder, nullptr);
+    if (FAILED(hr) || !pidlFolder)
+    {
+        pDesktopFolder->Release();
+        return 2;
+    }
+
+    IShellFolder *pShellFolder = nullptr;
+    hr = pDesktopFolder->BindToObject(pidlFolder, nullptr, IID_IShellFolder, reinterpret_cast<LPVOID*>(&pShellFolder));
+    if (FAILED(hr) || !pShellFolder)
+    {
+        pDesktopFolder->Release();
+        return 3;
+    }
+
+    ITEMIDLIST *pidlFile = nullptr;
+    hr = pShellFolder->ParseDisplayName(nullptr, nullptr, L"KuGou.exe", nullptr, &pidlFile, nullptr);
+    if (FAILED(hr) || !pidlFile)
+    {
+        pShellFolder->Release();
+        pDesktopFolder->Release();
+        return 4;
+    }
+
+    IContextMenu *pContextMenu = nullptr;
+    hr = pShellFolder->GetUIObjectOf(nullptr, 1, const_cast<LPCITEMIDLIST*>(&pidlFile), IID_IContextMenu, nullptr, reinterpret_cast<LPVOID*>(&pContextMenu));
+    if (FAILED(hr) || !pContextMenu)
+    {
+        pShellFolder->Release();
+        pDesktopFolder->Release();
+        return 5;
+    }
+
+    HMENU hMenu = CreatePopupMenu();
+    if (hMenu != nullptr)
+    {
+        hr = pContextMenu->QueryContextMenu(hMenu, 0, 1, 0x7FFF, CMF_NORMAL);
+        if (SUCCEEDED(hr))
+        {
+            CMINVOKECOMMANDINFOEX info = { 0 };
+            info.cbSize = sizeof(CMINVOKECOMMANDINFOEX);
+            info.fMask = CMIC_MASK_UNICODE | CMIC_MASK_FLAG_NO_UI | CMIC_MASK_NO_CONSOLE;
+            info.lpVerb = "taskbarpin";
+            info.lpVerbW = L"taskbarpin";
+            info.nShow = SW_SHOWNORMAL;
+            pContextMenu->InvokeCommand(reinterpret_cast<LPCMINVOKECOMMANDINFO>(&info));
+        }
+
+        DestroyMenu(hMenu);
+    }
+
+    //pContextMenu->Release();
+    pShellFolder->Release();
+    pDesktopFolder->Release();
+    return 0;
+}
+
 int _tmain(int argc, _TCHAR* argv[])
 {
     CoInitialize(nullptr);
 
-	HRESULT hr = E_FAIL;
-
-	CComPtr<IShellFolder> spDesktopFolder;
-	hr = SHGetDesktopFolder(&spDesktopFolder);
-	if (FAILED(hr))
-		return 1;
-
-	LPITEMIDLIST pidlFolder = nullptr;
-	hr = spDesktopFolder->ParseDisplayName(nullptr, nullptr, L"C:\\Program Files (x86)\\KuGou\\KGMusic", nullptr, &pidlFolder, nullptr);
-	if (FAILED(hr))
-		return 2;
-
-	CComPtr<IShellFolder> spShellFolder;
-	hr = spDesktopFolder->BindToObject(pidlFolder, nullptr, IID_IShellFolder, reinterpret_cast<LPVOID*>(&spShellFolder));
-	if (FAILED(hr))
-		return 3;
-
-	LPITEMIDLIST pidlFile = nullptr;
-	hr = spShellFolder->ParseDisplayName(nullptr, nullptr, L"KuGou.exe", nullptr, &pidlFile, nullptr);
-	if (FAILED(hr))
-		return 4;
-
-	{
-		CComPtr<IContextMenu> spContextMenu;
-		hr = spShellFolder->GetUIObjectOf(nullptr, 1, const_cast<LPCITEMIDLIST*>(&pidlFile), IID_IContextMenu, nullptr, reinterpret_cast<LPVOID*>(&spContextMenu));
-		if (FAILED(hr))
-			return 5;
-
-		HMENU hMenu = CreatePopupMenu();
-		if (hMenu != nullptr)
-		{
-			hr = spContextMenu->QueryContextMenu(hMenu, 0, 1, 0x7FFF, CMF_VERBSONLY);
-			if (SUCCEEDED(hr))
-			{		
-				CMINVOKECOMMANDINFO info = { 0 };
-				info.cbSize = sizeof(info);
-				info.lpVerb = "taskbarpin";
-				spContextMenu->InvokeCommand(&info);
-			}
-
-			DestroyMenu(hMenu);
-		}
-	}
+    int ret = CallIContextMenu();
 
     CoUninitialize();
-	return 0;
+    return ret;
 }
 
 //
