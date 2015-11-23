@@ -1,0 +1,65 @@
+HKCR
+{
+	NoRemove CLSID
+	{
+		ForceRemove {893ADB83-76E5-4362-830A-137AAD5B8804} = s '百度云管家'
+		{
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+            val InfoTip = s '双击运行百度云管家'
+            val LocalizedString = s '百度云管家'
+            val System.ItemAuthors = s '双击运行百度云管家'
+            val TileInfo = s 'prop:System.ItemAuthors'
+            Shell
+            {
+                Open = s '打开'
+                {
+                    Command = s '"C:\Program Files (x86)\KuGou\KGMusic\KuGou.exe"'
+                }
+                About = s '关于'
+                {
+                    Command = s 'cmd /c winver'
+                }
+            }
+            DefaultIcon = s '%MODULE%,0'
+		}
+	}
+}
+HKLM
+{
+    NoRemove Software
+    {
+        NoRemove Microsoft
+        {
+            NoRemove Windows
+            {
+                NoRemove CurrentVersion
+                {
+                    NoRemove Explorer
+                    {
+                        NoRemove MyComputer
+                        {
+                            NoRemove NameSpace
+                            {
+                                ForceRemove {893ADB83-76E5-4362-830A-137AAD5B8804}
+                                {
+                                    val 'Removal Message' = s '你确定要删除百度云管家？'
+                                }
+                            }
+                        }
+                    }
+                    NoRemove 'Shell Extensions'
+                    {
+                        NoRemove Approved
+                        {
+                            ForceRemove val {893ADB83-76E5-4362-830A-137AAD5B8804} = s 'BaiDuYunIcon Extension'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+

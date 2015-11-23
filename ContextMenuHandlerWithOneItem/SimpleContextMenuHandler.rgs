@@ -37,7 +37,7 @@ HKLM
                     {
                         NoRemove Approved
                         {
-                            ForceRemove val {8A63CE35-B0E1-4621-9BC1-487FA9398D31} = s 'SimpleContextMenuHandler Extension '
+                            ForceRemove val {8A63CE35-B0E1-4621-9BC1-487FA9398D31} = s 'SimpleContextMenuHandler Extension'
                         }
                     }
                 }

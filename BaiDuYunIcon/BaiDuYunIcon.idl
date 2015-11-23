@@ -1,0 +1,32 @@
+// BaiDuYunIcon.idl : BaiDuYunIcon 的 IDL 源
+//
+
+// 此文件将由 MIDL 工具处理以
+// 产生类型库(BaiDuYunIcon.tlb)和封送处理代码。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(B4697F41-10D6-4E49-AA09-746C3B71B7E8),
+	pointer_default(unique)
+]
+interface IMyShellFolder : IUnknown{
+};
+[
+	uuid(EB6C5867-A278-4F54-A2F9-86D3894D45F2),
+	version(1.0),
+]
+library BaiDuYunIconLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(893ADB83-76E5-4362-830A-137AAD5B8804)		
+	]
+	coclass MyShellFolder
+	{
+		[default] interface IMyShellFolder;
+	};
+};
+
