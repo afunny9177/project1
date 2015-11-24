@@ -19,6 +19,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BaiDuYunIconPS", "BaiDuYunI
 		{BD8C3C9B-025F-4F50-B9FE-7628352BA3F1} = {BD8C3C9B-025F-4F50-B9FE-7628352BA3F1}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Win32Project1", "Win32Project1\Win32Project1.vcxproj", "{64EF0B70-9E7B-454F-A837-770DF83782DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -56,6 +58,12 @@ Global
 		{E33E359B-8194-465A-BEDF-BAC8E230BDA8}.Debug|x64.ActiveCfg = Debug|x64
 		{E33E359B-8194-465A-BEDF-BAC8E230BDA8}.Release|Win32.ActiveCfg = Release|Win32
 		{E33E359B-8194-465A-BEDF-BAC8E230BDA8}.Release|x64.ActiveCfg = Release|x64
+		{64EF0B70-9E7B-454F-A837-770DF83782DC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{64EF0B70-9E7B-454F-A837-770DF83782DC}.Debug|Win32.Build.0 = Debug|Win32
+		{64EF0B70-9E7B-454F-A837-770DF83782DC}.Debug|x64.ActiveCfg = Debug|Win32
+		{64EF0B70-9E7B-454F-A837-770DF83782DC}.Release|Win32.ActiveCfg = Release|Win32
+		{64EF0B70-9E7B-454F-A837-770DF83782DC}.Release|Win32.Build.0 = Release|Win32
+		{64EF0B70-9E7B-454F-A837-770DF83782DC}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
